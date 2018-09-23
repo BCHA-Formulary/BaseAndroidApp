@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -11,23 +13,159 @@ android {
         minSdkVersion 23
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0"
+        versionName "0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        // temporary keystore for release builds, uses built-in debug keystore. if you want to test a custom keystore,
+        // make one and put it in your .android directory (/Users/<username>/.android/), and modify the file path (relative)
+        androidDebugKey {
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            storeFile file('debug.keystore')
+            storePassword 'android'
+        }
+    }
     buildTypes {
-        release {
+        debug {
+            buildConfigField "boolean", "BUILD_DEBUG", "true"
             minifyEnabled false
+            signingConfig signingConfigs.androidDebugKey
+        }
+        release {
+            buildConfigField "boolean", "BUILD_DEBUG", "false"
+            minifyEnabled true
+            signingConfig signingConfigs.androidDebugKey
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    // Configure only for each module that uses Java 8
+    // language features (either in its source code or
+    // through dependencies).
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    // == Java Lint ==
+    lintOptions {
+        abortOnError false
+        lintConfig file("../lint.xml")
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven { url "https://dl.bintray.com/drummer-aidan/maven/" }
+    }
+}
+
+configurations {
+    ktlint
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:27.1.1'
+
+    // == Support Libraries ==
+    // Backwards compat libraries
+    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
+    // Constraint Layout
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    // Recycler View
+    implementation "com.android.support:recyclerview-v7:${rootProject.ext.supportLibVersion}"
+    // Tab layout for dots
+    implementation "com.android.support:design:${rootProject.ext.supportLibVersion}"
+    // Card View
+    implementation "com.android.support:cardview-v7:${rootProject.ext.supportLibVersion}"
+
+    // == Dependency Inject ==
+    // ButterKnife
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    kapt 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    // == Dialog ==
+    // Material Dialog core TODO currently in beta
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+
+    // == Image Helper ==
+    // Glide image cache
+    implementation 'com.github.bumptech.glide:glide:4.6.1'
+    kapt 'com.github.bumptech.glide:compiler:4.6.1'
+
+    // == Repository ==
+    // OKHttp - Network
+    implementation "com.squareup.okhttp3:okhttp:3.10.0" //http helper
+
+    // == Data ==
+    // Google Gson - Json Parser
+    implementation 'com.google.code.gson:gson:2.8.5'
+    // RxAndroid
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    // Because RxAndroid releases are few and far between, it is recommended you also
+    // explicitly depend on RxJava's latest version for bug fixes and new features.
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.8' //RxJava
+
+    // == Date and Time ==
+    // Backport of java.time package (JSR-310)
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.0.5'
+    testImplementation('org.threeten:threetenbp:1.3.6') {
+        exclude group: 'com.jakewharton.threetenabp', module: 'threetenabp'
+    }
+
+    // == DevOps ==
+    // Leak Canary - Memory leaks
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.1'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.1'
+    // Optional, if you use support library fragments:
+    debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.1'
+
+    // == Testing ==
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    // mockito
+    testImplementation "org.mockito:mockito-core:${rootProject.ext.mockitoVersion}"
+    androidTestImplementation "org.mockito:mockito-android:${rootProject.ext.mockitoVersion}"
+
+    // roboelectric
+    testImplementation "org.robolectric:robolectric:3.6.1" // Integration test - robolectric
+    testImplementation "org.robolectric:shadows-support-v4:3.3.2" // robolectric add on for fragment testing
+
+    // === Lint ==
+    // kotlin lint
+    ktlint "com.github.shyiko:ktlint:0.23.0"
+}
+
+// Force all support libraries to use the same version
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == 'com.android.support') {
+            if (!requested.name.startsWith("multidex")) {
+                details.useVersion "${rootProject.ext.supportLibVersion}"
+            }
+        }
+    }
+}
+
+task ktlint(type: JavaExec, group: "verification") {
+    description = "Check Kotlin code style."
+    main = "com.github.shyiko.ktlint.Main"
+    classpath = configurations.ktlint
+    args "src/**/*.kt"
+    // to generate report in checkstyle format prepend following args:
+    // "--reporter=plain", "--reporter=checkstyle,output=${buildDir}/ktlint.xml"
+    // see https://github.com/shyiko/ktlint#usage for more
+}
+check.dependsOn ktlint
+
+task ktlintFormat(type: JavaExec, group: "formatting") {
+    description = "Fix Kotlin code style deviations."
+    main = "com.github.shyiko.ktlint.Main"
+    classpath = configurations.ktlint
+    args "-F", "src/**/*.kt"
 }

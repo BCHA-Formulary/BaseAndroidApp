@@ -1,9 +1,10 @@
-package com.kelvinchan.baseapp
+package com.kelvinchan.baseapp.view.base
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import com.kelvinchan.baseapp.R
 
-class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
