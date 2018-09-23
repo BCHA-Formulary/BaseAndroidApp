@@ -1,0 +1,2 @@
+# BaseAndroidApp
+A scaffolding app
