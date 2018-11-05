@@ -19,10 +19,10 @@ abstract class BaseActivity : AppCompatActivity(), BaseFragment.BaseFragmentInte
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_base)
+        setContentView(R.layout.activity_generic_frame)
     }
 
-    protected fun replaceFragment(activityContainerId: Int, fragment: Fragment, backstackTag: String?, args: Bundle?) {
+    protected fun replaceFragment(activityContainerId: Int, fragment: Fragment, backstackTag: String? = null, args: Bundle? = null) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
 
         // Optional: add fun animations

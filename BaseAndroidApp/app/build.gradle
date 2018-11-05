@@ -18,7 +18,7 @@ android {
     }
     signingConfigs {
         // temporary keystore for release builds, uses built-in debug keystore. if you want to test a custom keystore,
-        // make one and put it in your .android directory (/Users/<username>/.android/), and modify the file path (relative)
+        // you need a .jks file and it in your .android directory (/Users/<username>/.android/), and modify the file path (relative)
         androidDebugKey {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
@@ -30,12 +30,12 @@ android {
         debug {
             buildConfigField "boolean", "BUILD_DEBUG", "true"
             minifyEnabled false
-            signingConfig signingConfigs.androidDebugKey
+//            signingConfig signingConfigs.androidDebugKey
         }
         release {
             buildConfigField "boolean", "BUILD_DEBUG", "false"
             minifyEnabled true
-            signingConfig signingConfigs.androidDebugKey
+//            signingConfig signingConfigs.androidDebugKey
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -68,7 +68,7 @@ configurations {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     // == Support Libraries ==
     // Backwards compat libraries
