@@ -39,7 +39,7 @@ class MainActivity : BaseActivity(),
     }
 
     private fun navigateToFirstFragment() {
-        val firstFragment = FirstFragment()
+        val firstFragment = FirstFragment.newInstance()
         replaceFragment(R.id.frame_generic, firstFragment)
     }
 
