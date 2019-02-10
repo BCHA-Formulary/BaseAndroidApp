@@ -1,6 +1,5 @@
 package com.kelvinchan.baseapp.repository.network
 
-import android.util.Log
 import android.util.Pair
 import com.kelvinchan.baseapp.exception.NetworkException
 import com.kelvinchan.baseapp.exception.ResponseException
@@ -8,6 +7,7 @@ import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 abstract class BaseNetwork {
@@ -50,7 +50,7 @@ abstract class BaseNetwork {
         val responseCode = response.code()
         val responseCodeVal = responseCode.toString()
         val logMessage = String.format("Response error code: %s, error: %s ", responseCode, responseBody)
-        Log.i(TAG,"Response error code: $responseCode, error: $responseBody" )
+        Timber.i("Response error code: $responseCode, error: $responseBody" )
         throw ResponseException(responseCodeVal, Throwable(logMessage))
     }
 

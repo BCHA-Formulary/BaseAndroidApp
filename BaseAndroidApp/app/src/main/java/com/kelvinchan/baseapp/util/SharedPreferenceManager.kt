@@ -3,7 +3,6 @@ package com.kelvinchan.baseapp.util
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import com.kelvinchan.baseapp.exception.ManagerException
 
 class SharedPrefManager : Clearable {
 
@@ -65,16 +64,12 @@ class SharedPrefManager : Clearable {
 
         fun initialize(applicationContext: Context) {
             if (sharedPreferences == null) {
-                sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext.applicationContext)
+                sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
             }
         }
 
-        val sharedPrefInstance: SharedPrefManager
-            @Throws(ManagerException::class)
+        val sharedPrefInstance: SharedPrefManager?
             get() {
-                if (sharedPreferences == null) {
-                    throw ManagerException("Shared pref not initialized")
-                }
                 return sharedPrefManager
             }
     }

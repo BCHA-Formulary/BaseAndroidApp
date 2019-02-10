@@ -7,6 +7,10 @@ class BaseApplication: Application() {
     override fun onCreate() {
         super.onCreate()
         mAppContext = this
+
+        /* Optional to init the shared pref here
+        SharedPrefManager.initialize(this)
+         */
     }
 
     companion object {
