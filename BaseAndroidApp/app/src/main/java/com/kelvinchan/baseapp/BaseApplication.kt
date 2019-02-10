@@ -3,7 +3,7 @@ package com.kelvinchan.baseapp
 import android.app.Application
 import android.content.Context
 
-class BaseApplication: Application() {
+class BaseApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         mAppContext = this

@@ -17,8 +17,8 @@ class MainActivity : BaseActivity(),
     private lateinit var mMainPresenter: MainActivityMVP.Presenter
 
     // View Bindings
-    @BindView(R.id.frame_generic) lateinit var genericFrame: FrameLayout
-
+    @BindView(R.id.frame_generic)
+    lateinit var genericFrame: FrameLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

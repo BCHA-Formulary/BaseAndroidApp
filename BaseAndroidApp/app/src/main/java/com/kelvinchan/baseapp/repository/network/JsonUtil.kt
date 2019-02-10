@@ -30,7 +30,7 @@ class JsonUtil<T> {
      * @return
      */
     fun serializeObject(obj: T, ignoreEmptyString: Boolean, keepNulls: Boolean): String {
-        val gb = GsonBuild.customGson
+        val gb = MyGsonBuilder.customGson
         if (ignoreEmptyString)
             gb.registerTypeAdapter(String::class.java, AdapterJsonIgnoreEmptyString())
         if (keepNulls)
@@ -41,7 +41,7 @@ class JsonUtil<T> {
 
     companion object {
         val TAG: String = JsonUtil::class.java.simpleName
-        internal var gsonBuilder = GsonBuild.customGson
+        internal var gsonBuilder = MyGsonBuilder.customGson
 
         /**
          * Helper class used with gson builder registerTypeAdapter. Tells Json to ignore empty/null strings

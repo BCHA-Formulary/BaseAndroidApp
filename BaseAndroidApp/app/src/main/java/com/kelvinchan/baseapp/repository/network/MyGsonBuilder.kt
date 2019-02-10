@@ -2,8 +2,8 @@ package com.kelvinchan.baseapp.repository.network
 
 import com.google.gson.GsonBuilder
 
-object GsonBuild {
-    private val TAG = GsonBuild::class.java.simpleName
+object MyGsonBuilder {
+    private val TAG = MyGsonBuilder::class.java.simpleName
     val customGson: GsonBuilder
         get() {
             var gsonBuilder = GsonBuilder()
@@ -13,6 +13,7 @@ object GsonBuild {
 
             return gsonBuilder
         }
+
     /**
      * Adds all the custom gson serialized adapters for specific enum fields
      * @param gsonBuilder

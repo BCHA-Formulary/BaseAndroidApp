@@ -16,7 +16,8 @@ abstract class BaseNetwork {
 
     @Throws(Exception::class)
     private fun genericGetRequest(endpoint: String, queries: List<Pair<String, String>>?, headers: List<Pair<String, String>>?): String? {
-        val urlBuilder = HttpUrl.parse(endpoint)?.newBuilder() ?: throw NetworkException("URL $endpoint could not be created")
+        val urlBuilder = HttpUrl.parse(endpoint)?.newBuilder()
+                ?: throw NetworkException("URL $endpoint could not be created")
 
         if (queries != null) {
             for (query in queries) {
@@ -50,12 +51,12 @@ abstract class BaseNetwork {
         val responseCode = response.code()
         val responseCodeVal = responseCode.toString()
         val logMessage = String.format("Response error code: %s, error: %s ", responseCode, responseBody)
-        Timber.i("Response error code: $responseCode, error: $responseBody" )
+        Timber.i("Response error code: $responseCode, error: $responseBody")
         throw ResponseException(responseCodeVal, Throwable(logMessage))
     }
 
     private inner class OkClient {
-        //we only ever want 1 instance of the okhttpclient
+        // we only ever want 1 instance of the okhttpclient
         private val okClientInstance = OkHttpClient()
 
         /*
@@ -76,12 +77,12 @@ abstract class BaseNetwork {
             return defaultOkClientSettings(builder)
         }
 
-        //applies default settings to the builder instance
+        // applies default settings to the builder instance
         private fun defaultOkClientSettings(
-                builder: OkHttpClient.Builder,
-                connTimeoutSec: Long = 10,
-                readTimeoutSec:Long = 30,
-                pingIntervalSec:Long = 5
+            builder: OkHttpClient.Builder,
+            connTimeoutSec: Long = 10,
+            readTimeoutSec: Long = 30,
+            pingIntervalSec: Long = 5
         ): OkHttpClient {
             builder.connectTimeout(connTimeoutSec, TimeUnit.SECONDS)
             builder.readTimeout(readTimeoutSec, TimeUnit.SECONDS)
