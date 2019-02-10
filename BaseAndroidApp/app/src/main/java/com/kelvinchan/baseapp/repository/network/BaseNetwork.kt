@@ -41,7 +41,7 @@ abstract class BaseNetwork {
 
     @Throws(Exception::class)
     private fun determineResponse(response: Response): String? {
-        val responseBody = response.body()!!.string()
+        val responseBody = response.body()?.string()
         if (response.isSuccessful) {
             response.close()
             return responseBody
@@ -60,21 +60,12 @@ abstract class BaseNetwork {
         private val okClientInstance = OkHttpClient()
 
         /*
-         * Build a okClientInstance instance with a default of:
-         * 10s connection timeout
-         * 30s read timeout
-         * 5s ping interval
-         *
-         *
-         * Documents say to only have 1 singleton instance of the client as it shares resoruce pools
-         * but creating builders is ok.
+         * Can have multiple builders but only 1 singleton instance
          * https://github.com/square/okhttp/wiki/Recipes#per-call-configuration
-         *
-         * @return
          */
-        fun makeDefaultClient(): OkHttpClient {
+        fun makeDefaultClient(connTime: Long = 10, readTime: Long = 30, pingTime: Long = 5): OkHttpClient {
             val builder = okClientInstance.newBuilder()
-            return defaultOkClientSettings(builder)
+            return defaultOkClientSettings(builder, connTime, readTime, pingTime)
         }
 
         // applies default settings to the builder instance
