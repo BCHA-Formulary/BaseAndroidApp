@@ -34,3 +34,7 @@ task clean(type: Delete) {
 task baseLevel() {
     println('base level')
 }
+
+task check() {
+    println('checking')
+}
