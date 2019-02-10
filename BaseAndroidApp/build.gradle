@@ -30,3 +30,7 @@ ext {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+task baseLevel() {
+    println('base level')
+}
