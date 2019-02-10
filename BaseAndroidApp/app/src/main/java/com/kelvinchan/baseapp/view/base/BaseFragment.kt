@@ -1,10 +1,8 @@
 package com.kelvinchan.baseapp.view.base
 
 import android.content.Context
-import android.net.Uri
 import android.support.v4.app.Fragment
 import android.view.View
-import io.reactivex.CompletableObserver
 import java.lang.ref.WeakReference
 
 /**
@@ -58,15 +56,10 @@ abstract class BaseFragment : Fragment() {
         mFragmentInteractor?.hideSoftKeyboard(view)
     }
 
-    protected fun openUriInBrowser(uri: Uri?, webViewCompletable: CompletableObserver) {
-        mFragmentInteractor?.openUriInBrowser(uri, webViewCompletable)
-    }
-
     interface BaseFragmentInteractorListener {
         fun showToast(res: Int, duration: Int)
         fun showToast(message: String, duration: Int)
         fun uiChangeOnUiThread(uiRunnable: Runnable)
         fun hideSoftKeyboard(view: View)
-        fun openUriInBrowser(uri: Uri?, webViewCompletable: CompletableObserver)
     }
 }

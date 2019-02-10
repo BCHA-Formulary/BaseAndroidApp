@@ -1,17 +1,14 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     defaultConfig {
         applicationId "com.kelvinchan.baseapp"
         minSdkVersion 23
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
         versionName "0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -30,12 +27,10 @@ android {
         debug {
             buildConfigField "boolean", "BUILD_DEBUG", "true"
             minifyEnabled false
-//            signingConfig signingConfigs.androidDebugKey
         }
         release {
             buildConfigField "boolean", "BUILD_DEBUG", "false"
             minifyEnabled true
-//            signingConfig signingConfigs.androidDebugKey
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

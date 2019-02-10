@@ -15,11 +15,11 @@ import com.kelvinchan.baseapp.view.base.BaseFragment
 /**
  * Created by Kelvin Chan on 2018-11-04.
  */
-class FirstFragment: BaseFragment(), FirstMVP.View {
-    lateinit var mFirstPresenter: FirstMVP.Presenter
-    lateinit var mFirstInteractorListener: FirstFragmentInteractorListener
+class FirstFragment : BaseFragment(), FirstMVP.View {
+    private lateinit var mFirstPresenter: FirstMVP.Presenter
+    private lateinit var mFirstInteractorListener: FirstFragmentInteractorListener
 
-    @BindView (R.id.firstText)
+    @BindView(R.id.firstText)
     lateinit var firstText: TextView
 
     override fun onAttach(context: Context?) {
@@ -52,11 +52,11 @@ class FirstFragment: BaseFragment(), FirstMVP.View {
         fun newInstance(): Fragment {
             val bundle = Bundle()
             val firstFragment = FirstFragment()
-            firstFragment.setArguments(bundle)
+            firstFragment.arguments = bundle
             return firstFragment
         }
     }
 
     // To interact with the activity
-    interface FirstFragmentInteractorListener: BaseFragmentInteractorListener
+    interface FirstFragmentInteractorListener : BaseFragmentInteractorListener
 }
