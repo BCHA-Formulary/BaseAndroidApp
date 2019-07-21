@@ -9,7 +9,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.bcha.formulary.R
 
-abstract class BaseActivity : AppCompatActivity(), BaseFragment.BaseFragmentInteractorListener {
+abstract class BaseActivity : AppCompatActivity(), BaseFragment.BaseFragmentInteractor {
     private val TAG = BaseActivity::class.java.simpleName
     protected var mCurrentVisibleFragment: Fragment? = null
 

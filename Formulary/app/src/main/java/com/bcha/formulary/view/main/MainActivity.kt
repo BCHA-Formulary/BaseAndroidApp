@@ -6,15 +6,15 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.bcha.formulary.R
 import com.bcha.formulary.view.base.BaseActivity
-import com.bcha.formulary.view.main.firstFragment.FirstFragment
+import com.bcha.formulary.view.main.searchFragment.SearchFragment
 
 /**
  * Created by Kelvin Chan on 2018-09-22.
  */
 class MainActivity : BaseActivity(),
         MainActivityMVP.View,
-        FirstFragment.FirstFragmentInteractorListener {
-    private lateinit var mMainPresenter: MainActivityMVP.Presenter
+        SearchFragment.SearchFragmentInteractor {
+    private lateinit var mainPresenter: MainActivityMVP.Presenter
 
     // View Bindings
     @BindView(R.id.frame_generic)
@@ -31,15 +31,20 @@ class MainActivity : BaseActivity(),
 
     override fun onStart() {
         super.onStart()
-        mMainPresenter.onStart()
+        mainPresenter.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mainPresenter.checkFormularyUpdate()
     }
 
     override fun setPresenter(presenter: MainActivityMVP.Presenter) {
-        this.mMainPresenter = presenter
+        this.mainPresenter = presenter
     }
 
     private fun navigateToFirstFragment() {
-        val firstFragment = FirstFragment.newInstance()
+        val firstFragment = SearchFragment.newInstance()
         replaceFragment(R.id.frame_generic, firstFragment)
     }
 

@@ -6,7 +6,9 @@ import com.bcha.formulary.view.base.BaseMVP
  * Created by Kelvin Chan on 2018-11-04.
  */
 class MainActivityMVP {
-    interface Presenter : BaseMVP.BasePresenter
+    interface Presenter : BaseMVP.BasePresenter {
+        fun checkFormularyUpdate()
+    }
 
     interface View : BaseMVP.BaseView<Presenter>
 

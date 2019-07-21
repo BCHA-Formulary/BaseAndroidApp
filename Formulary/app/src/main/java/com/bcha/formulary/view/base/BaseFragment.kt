@@ -11,16 +11,16 @@ import java.lang.ref.WeakReference
 abstract class BaseFragment : Fragment() {
     protected val TAG = BaseFragment::class.java.simpleName
     protected var mContext: WeakReference<Context>? = null
-    private var mFragmentInteractor: BaseFragmentInteractorListener? = null
+    private var mFragmentInteractor: BaseFragmentInteractor? = null
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         context?.let {
             mContext = WeakReference(it)
-            if (it is BaseFragmentInteractorListener) {
+            if (it is BaseFragmentInteractor) {
                 mFragmentInteractor = it
             } else {
-                throw RuntimeException("Activity does not implement BaseFragmentInteractorListener")
+                throw RuntimeException("Activity does not implement BaseFragmentInteractor")
             }
         }
     }
@@ -29,10 +29,10 @@ abstract class BaseFragment : Fragment() {
         super.onStart()
 
         if (mFragmentInteractor == null) {
-            if (mContext is BaseFragmentInteractorListener) {
-                mFragmentInteractor = mContext as BaseFragmentInteractorListener
+            if (mContext is BaseFragmentInteractor) {
+                mFragmentInteractor = mContext as BaseFragmentInteractor
             } else {
-                throw RuntimeException("Activity does not implement BaseFragmentInteractorListener")
+                throw RuntimeException("Activity does not implement BaseFragmentInteractor")
             }
         }
     }
@@ -56,7 +56,7 @@ abstract class BaseFragment : Fragment() {
         mFragmentInteractor?.hideSoftKeyboard(view)
     }
 
-    interface BaseFragmentInteractorListener {
+    interface BaseFragmentInteractor {
         fun showToast(res: Int, duration: Int)
         fun showToast(message: String, duration: Int)
         fun uiChangeOnUiThread(uiRunnable: Runnable)

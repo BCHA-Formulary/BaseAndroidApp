@@ -1,13 +1,11 @@
-package com.bcha.formulary.view.main.firstFragment
+package com.bcha.formulary.view.main.searchFragment
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import butterknife.BindView
+import androidx.fragment.app.Fragment
 import butterknife.ButterKnife
 import com.bcha.formulary.R
 import com.bcha.formulary.view.base.BaseFragment
@@ -15,48 +13,48 @@ import com.bcha.formulary.view.base.BaseFragment
 /**
  * Created by Kelvin Chan on 2018-11-04.
  */
-class FirstFragment : BaseFragment(), FirstMVP.View {
-    private lateinit var mFirstPresenter: FirstMVP.Presenter
-    private lateinit var mFirstInteractorListener: FirstFragmentInteractorListener
+class SearchFragment : BaseFragment(), SearchMVP.View {
+    private lateinit var searchPresenter: SearchMVP.Presenter
+    private lateinit var searchInteractor: SearchFragmentInteractor
 
-    @BindView(R.id.firstText)
-    lateinit var firstText: TextView
+//    @BindView(R.id.firstText)
+//    lateinit var firstText: TextView
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
 
-        if (context is FirstFragmentInteractorListener) {
-            mFirstInteractorListener = context
+        if (context is SearchFragmentInteractor) {
+            searchInteractor = context
         } else {
-            throw RuntimeException("Activity does not implement FirstFragmentInteractorListener")
+            throw RuntimeException("Activity does not implement SearchFragmentInteractor")
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_first, container, false)
         ButterKnife.bind(this, view)
-        setPresenter(FirstPresenter(this, FirstInteractor()))
+        setPresenter(SearchPresenter(this, SearchInteractor()))
         return view
     }
 
     override fun onStart() {
         super.onStart()
-        mFirstPresenter.onStart()
+        searchPresenter.onStart()
     }
 
-    override fun setPresenter(presenter: FirstMVP.Presenter) {
-        this.mFirstPresenter = presenter
+    override fun setPresenter(presenter: SearchMVP.Presenter) {
+        this.searchPresenter = presenter
     }
 
     companion object {
         fun newInstance(): Fragment {
             val bundle = Bundle()
-            val firstFragment = FirstFragment()
+            val firstFragment = SearchFragment()
             firstFragment.arguments = bundle
             return firstFragment
         }
     }
 
     // To interact with the activity
-    interface FirstFragmentInteractorListener : BaseFragmentInteractorListener
+    interface SearchFragmentInteractor : BaseFragmentInteractor
 }

@@ -1,9 +1,9 @@
-package com.bcha.formulary.view.main.firstFragment
+package com.bcha.formulary.view.main.searchFragment
 
 /**
  * Created by Kelvin Chan on 2018-11-04.
  */
-class FirstInteractor : FirstMVP.Interactor {
+class SearchInteractor : SearchMVP.Interactor {
     override fun unsubscribe() {
     }
 
