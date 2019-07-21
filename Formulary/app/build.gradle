@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 28
@@ -103,6 +104,9 @@ dependencies {
 //    // Because RxAndroid releases are few and far between, it is recommended you also
 //    // explicitly depend on RxJava's latest version for bug fixes and new features.
 //    implementation 'io.reactivex.rxjava2:rxjava:2.2.2' //RxJava
+
+    // Firebase
+    implementation 'com.google.firebase:firebase-core:17.0.0'
 
     // == Date and Time ==
     // Backport of java.time package (JSR-310)
