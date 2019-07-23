@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:text="Refresh"
+        android:hint="Refresh"
         app:layout_constraintBottom_toBottomOf="@+id/txt_search_status"
         app:layout_constraintStart_toEndOf="@+id/txt_search_status"
         app:layout_constraintTop_toTopOf="@+id/txt_search_status" />

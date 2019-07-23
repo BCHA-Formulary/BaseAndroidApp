@@ -2,6 +2,7 @@ package com.bcha.formulary
 
 import android.app.Application
 import android.content.Context
+import com.bcha.formulary.util.SharedPrefManager
 import timber.log.Timber
 
 class FormularyApplication : Application() {
@@ -12,9 +13,8 @@ class FormularyApplication : Application() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
-        /* Optional to init the shared pref here
+
         SharedPrefManager.initialize(this)
-         */
     }
 
     companion object {

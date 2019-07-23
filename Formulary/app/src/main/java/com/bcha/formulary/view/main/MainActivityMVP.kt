@@ -1,5 +1,6 @@
 package com.bcha.formulary.view.main
 
+import com.bcha.formulary.model.FormularyStatus
 import com.bcha.formulary.view.base.BaseMVP
 
 /**
@@ -7,10 +8,11 @@ import com.bcha.formulary.view.base.BaseMVP
  */
 class MainActivityMVP {
     interface Presenter : BaseMVP.BasePresenter {
-        fun checkFormularyUpdate()
     }
 
-    interface View : BaseMVP.BaseView<Presenter>
+    interface View : BaseMVP.BaseView<Presenter> {
+        fun updateStatus(status: FormularyStatus)
+    }
 
     interface Interactor : BaseMVP.BaseInterator
 }

@@ -6,25 +6,29 @@ import android.preference.PreferenceManager
 
 class SharedPrefManager : Clearable {
 
-    fun put(key: String, `val`: Boolean) {
+    fun putBool(key: String, value: Boolean) {
         val editor = sharedPreferences?.edit()
-        editor?.putBoolean(key, `val`)
-        editor?.apply()
+        editor?.putBoolean(key, value)?.apply()
+    }
+
+    fun putString(key: String, value: String) {
+        val editor = sharedPreferences?.edit()
+        editor?.putString(key, value)?.apply()
     }
 
     fun getBool(key: String, defaultVal: Boolean): Boolean? {
         return sharedPreferences?.getBoolean(key, defaultVal)
     }
 
-    fun setBool(key: String, `val`: Boolean) {
+    fun setBool(key: String, value: Boolean) {
         val editor = sharedPreferences?.edit()
-        editor?.putBoolean(key, `val`)
+        editor?.putBoolean(key, value)
         editor?.apply()
     }
 
-    fun setString(key: String, `val`: String) {
+    fun setString(key: String, value: String) {
         val editor = sharedPreferences?.edit()
-        editor?.putString(key, `val`)
+        editor?.putString(key, value)
         editor?.apply()
     }
 
@@ -32,9 +36,9 @@ class SharedPrefManager : Clearable {
         return sharedPreferences?.getString(key, defaultVal)
     }
 
-    fun setLong(key: String, `val`: Long) {
+    fun setLong(key: String, value: Long) {
         val editor = sharedPreferences?.edit()
-        editor?.putLong(key, `val`)
+        editor?.putLong(key, value)
         editor?.apply()
     }
 

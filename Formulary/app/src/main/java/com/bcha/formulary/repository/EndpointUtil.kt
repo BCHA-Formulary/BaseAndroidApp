@@ -1,4 +1,4 @@
-package com.bcha.formulary.repository.network
+package com.bcha.formulary.repository
 
 class EndpointUtil {
     companion object {
@@ -8,6 +8,12 @@ class EndpointUtil {
     class Firebase {
         companion object {
             const val LAST_UPDATED = "Update"
+        }
+    }
+
+    class SharedPref {
+        companion object {
+            const val LAST_UPDATE_KEY = "lastUpdated"
         }
     }
 }

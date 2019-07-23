@@ -5,8 +5,10 @@ import android.widget.FrameLayout
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.bcha.formulary.R
+import com.bcha.formulary.model.FormularyStatus
 import com.bcha.formulary.view.base.BaseActivity
 import com.bcha.formulary.view.main.searchFragment.SearchFragment
+import timber.log.Timber
 
 /**
  * Created by Kelvin Chan on 2018-09-22.
@@ -14,6 +16,7 @@ import com.bcha.formulary.view.main.searchFragment.SearchFragment
 class MainActivity : BaseActivity(),
         MainActivityMVP.View,
         SearchFragment.SearchFragmentInteractor {
+
     private lateinit var mainPresenter: MainActivityMVP.Presenter
 
     // View Bindings
@@ -34,13 +37,17 @@ class MainActivity : BaseActivity(),
         mainPresenter.onStart()
     }
 
-    override fun onResume() {
-        super.onResume()
-        mainPresenter.checkFormularyUpdate()
+    override fun onStop() {
+        super.onStop()
+        mainPresenter.onStop()
     }
 
     override fun setPresenter(presenter: MainActivityMVP.Presenter) {
         this.mainPresenter = presenter
+    }
+
+    override fun updateStatus(status: FormularyStatus) {
+        Timber.d(status.toString())
     }
 
     private fun navigateToFirstFragment() {
